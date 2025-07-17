@@ -1,0 +1,43 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+echo "🔍 Running pre-commit checks..."
+echo ""
+
+# 1. Format check
+echo "📝 Checking code formatting..."
+npm run format:check || {
+  echo "❌ Format check failed. Run 'npm run format' to fix."
+  exit 1
+}
+echo "✅ Format check passed"
+echo ""
+
+# 2. Linting
+echo "🔧 Running linters..."
+npm run lint || {
+  echo "❌ Linting failed. Fix errors and try again."
+  exit 1
+}
+echo "✅ Linting passed"
+echo ""
+
+# 3. Security check
+echo "🔒 Running security checks..."
+npm run security:check || {
+  echo "⚠️  Security warnings found. Review before committing."
+}
+echo "✅ Security check completed"
+echo ""
+
+# 4. Unit tests
+echo "🧪 Running tests..."
+npm test || {
+  echo "❌ Tests failed. Fix tests before committing."
+  exit 1
+}
+echo "✅ Tests passed"
+echo ""
+
+echo "✨ All pre-commit checks passed!"
+echo "✨ Ready to commit!"
