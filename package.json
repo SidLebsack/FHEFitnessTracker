@@ -1,0 +1,61 @@
+{
+  "name": "privacy-fitness-tracker",
+  "version": "1.0.0",
+  "description": "Confidential fitness tracking platform with FHE technology",
+  "main": "index.js",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "coverage": "hardhat coverage",
+    "deploy": "hardhat run scripts/deploy.js --network sepolia",
+    "deploy:local": "hardhat run scripts/deploy.js --network localhost",
+    "verify": "hardhat run scripts/verify.js --network sepolia",
+    "interact": "hardhat run scripts/interact.js --network sepolia",
+    "simulate": "hardhat run scripts/simulate.js --network localhost",
+    "node": "hardhat node",
+    "clean": "hardhat clean",
+    "lint": "npm run lint:sol && npm run lint:js",
+    "lint:sol": "solhint --max-warnings 0 'contracts/**/*.sol'",
+    "lint:js": "eslint --ignore-path ./.eslintignore --ext .js .",
+    "format": "npm run format:sol && npm run format:js",
+    "format:sol": "prettier --write 'contracts/**/*.sol'",
+    "format:js": "prettier --write 'scripts/**/*.js' 'test/**/*.js' 'hardhat.config.js'",
+    "format:check": "prettier --check '**/*.{js,json,md,sol,yml}'",
+    "security:check": "npm audit && npm run security:slither",
+    "security:slither": "echo 'Install Slither: pip3 install slither-analyzer'",
+    "security:mythril": "echo 'Install Mythril: pip3 install mythril'",
+    "security:audit": "npm run lint:sol && npm audit",
+    "gas:report": "REPORT_GAS=true npm test",
+    "gas:analyze": "hardhat test --grep 'Gas' ",
+    "performance:test": "npm run gas:report",
+    "performance:optimize": "npm run compile && npm run gas:report",
+    "size:check": "hardhat size-contracts",
+    "prepare": "husky install",
+    "precommit": "npm run format:check && npm run lint && npm test",
+    "prepush": "npm run security:check && npm run coverage"
+  },
+  "keywords": [
+    "blockchain",
+    "ethereum",
+    "fitness",
+    "privacy",
+    "fhe",
+    "zama",
+    "smart-contracts",
+    "hardhat"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@nomicfoundation/hardhat-verify": "^2.0.0",
+    "hardhat": "^2.22.0",
+    "prettier": "^3.0.0",
+    "prettier-plugin-solidity": "^1.1.0",
+    "solhint": "^4.0.0"
+  },
+  "dependencies": {
+    "dotenv": "^16.0.0",
+    "ethers": "^6.14.0"
+  }
+}
