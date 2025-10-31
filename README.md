@@ -8,7 +8,7 @@
 [![Tests](https://img.shields.io/badge/Tests-100+-brightgreen)](./TESTING.md)
 [![Coverage](https://img.shields.io/badge/Coverage-95%25-success)](./TESTING.md)
 
-**🌐 [Live Demo](https://fhe-fitness-tracker.vercel.app/) | 📹 [Download Video Demo](./demo.mp4) | 📖 [Documentation](./DEPLOYMENT.md) | 🔗 [GitHub](https://github.com/SidLebsack/FHEFitnessTracker)**
+**🌐 [Live Demo](https://fhe-fitness-tracker.vercel.app/) | 📹 [Download Video Demo demo.mp4] | 📖 [Documentation](./DEPLOYMENT.md) | 🔗 [GitHub](https://github.com/SidLebsack/FHEFitnessTracker)**
 
 ---
 
