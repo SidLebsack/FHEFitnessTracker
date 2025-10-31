@@ -1,6 +1,6 @@
 # 🏋️ Privacy Fitness Tracker
 
-> 🔐 Confidential Member Tracking with Zama FHE Technology
+> 🔐 Confidential Fitness Club Member Data Tracking with Zama FHE Technology
 
 [![Solidity](https://img.shields.io/badge/Solidity-0.8.24-blue)](https://soliditylang.org/)
 [![Hardhat](https://img.shields.io/badge/Hardhat-2.22.0-yellow)](https://hardhat.org/)
@@ -8,17 +8,122 @@
 [![Tests](https://img.shields.io/badge/Tests-100+-brightgreen)](./TESTING.md)
 [![Coverage](https://img.shields.io/badge/Coverage-95%25-success)](./TESTING.md)
 
-**🌐 [Live Demo](#demo) | 📹 [Video Demo](./PrivateFitnessTracker.mp4) | 📖 [Documentation](./DEPLOYMENT.md)**
+**🌐 [Live Demo](https://fhe-fitness-tracker.vercel.app/) | 📹 [Download Video Demo](./demo.mp4) | 📖 [Documentation](./DEPLOYMENT.md) | 🔗 [GitHub](https://github.com/SidLebsack/FHEFitnessTracker)**
 
 ---
 
 ## ⚡ Quick Overview
 
-A **privacy-preserving fitness tracking platform** built with **Hardhat** that leverages **Fully Homomorphic Encryption (FHE)** from **Zama** to protect member privacy while enabling secure competitions and progress tracking.
+A **privacy-preserving fitness club membership platform** built with **Hardhat** and **React** that leverages **Fully Homomorphic Encryption (FHE)** from **Zama** to protect member health data while enabling secure competitions and confidential progress tracking.
 
 ✨ **Track workouts** • 🔒 **Keep data private** • 🏆 **Join challenges** • 💰 **Win rewards**
 
-Built for the **Zama FHE Challenge** - demonstrating practical privacy-preserving applications on blockchain.
+**🆕 NEW: Modern React Frontend** - Now includes a complete React 18 + TypeScript frontend with @fhevm/sdk integration for seamless encrypted data handling!
+
+Built for the **Zama FHE Challenge** - demonstrating practical privacy-preserving applications in fitness and health data management.
+
+---
+
+## 🎯 Core Concepts
+
+### 1. **FHE Contract for Confidential Fitness Data**
+
+This project implements a **smart contract with Fully Homomorphic Encryption (FHE)** that enables:
+
+- **Encrypted Workout Tracking** - All fitness metrics (calories, duration, intensity) are encrypted on-chain
+- **Computation on Encrypted Data** - The contract can perform calculations without ever decrypting sensitive information
+- **Privacy-Preserving Competitions** - Members can compete in challenges while keeping their individual performance private
+- **Selective Disclosure** - Only the member can decrypt their own data using EIP-712 signatures
+
+### 2. **Confidential Fitness Club Membership**
+
+The platform provides a complete **privacy-first fitness club management system**:
+
+#### Member Privacy Features:
+- 🔐 **Encrypted Registration** - Membership type (Basic, Premium, Elite, Corporate) stored confidentially
+- 📊 **Private Health Metrics** - All workout data encrypted before blockchain submission
+- 🏥 **HIPAA-Style Confidentiality** - Health information never exposed in plaintext
+- 🎭 **Anonymous Participation** - Join challenges without revealing identity
+
+#### How FHE Protects Member Data:
+
+```solidity
+// Example: Recording workout with FHE encryption
+euint32 encryptedCalories = FHE.asEuint32(_caloriesBurned);
+euint16 encryptedDuration = FHE.asEuint16(_durationMinutes);
+euint8 encryptedIntensity = FHE.asEuint8(_intensityLevel);
+
+// Store encrypted data - never plaintext on-chain
+workoutData[msg.sender].totalCalories = FHE.add(
+    workoutData[msg.sender].totalCalories,
+    encryptedCalories
+);
+```
+
+**Key FHE Operations:**
+- `FHE.asEuint*()` - Encrypt plaintext to euint types
+- `FHE.add()` - Add encrypted values without decryption
+- `FHE.ge()`, `FHE.lt()` - Compare encrypted values homomorphically
+- `FHE.select()` - Conditional selection on encrypted data
+
+### 3. **Confidential Fitness Data Tracking**
+
+The smart contract tracks multiple encrypted metrics:
+
+| Data Type | Encrypted Type | Privacy Level | Use Case |
+|-----------|----------------|---------------|----------|
+| **Calories Burned** | `euint32` | 🔐 Private | Workout intensity tracking |
+| **Duration (minutes)** | `euint16` | 🔐 Private | Session length monitoring |
+| **Intensity Level** | `euint8` | 🔐 Private | Workout difficulty (1-10) |
+| **Total Workouts** | `uint256` | 📍 Public | Activity frequency |
+| **Challenge Progress** | `euint32` | 🔐 Private | Competition status |
+| **Membership Type** | `string` | 📍 Public | Club tier |
+
+**Privacy Guarantees:**
+- ✅ Individual workout metrics **never exposed** in plaintext
+- ✅ Aggregate calculations performed **on encrypted data**
+- ✅ Members can prove achievements **without revealing exact values**
+- ✅ Challenge winners determined **without exposing losing participants' data**
+
+### 4. **Privacy Model Explained**
+
+#### What's Private (FHE-Encrypted):
+- ✅ **Calories burned per workout** - Encrypted with `euint32`
+- ✅ **Workout duration** - Encrypted with `euint16`
+- ✅ **Intensity levels** - Encrypted with `euint8`
+- ✅ **Cumulative totals** - Computed using `FHE.add()` homomorphically
+- ✅ **Challenge progress** - Compared using `FHE.ge()` without decryption
+
+#### What's Public (On-Chain):
+- 📍 **Membership existence** - Address registered (required for blockchain)
+- 📍 **Challenge participation** - Address joined challenge
+- 📍 **Workout count** - Number of sessions (not intensity)
+- 📍 **Challenge metadata** - Names, goals, prize pools
+
+#### Decryption Control:
+- 🔑 **Member** - Can decrypt own data with EIP-712 signature
+- 🔑 **Contract Owner** - Emergency administrative access only
+- 🔑 **Challenge Creator** - Can verify winners without seeing individual scores
+
+### 5. **Real-World Use Cases**
+
+**Fitness Club Operators:**
+- Manage confidential member health data
+- Create privacy-preserving competitions
+- Track aggregate club statistics
+- Maintain HIPAA-style privacy compliance
+
+**Gym Members:**
+- Record workouts without exposing personal health metrics
+- Compete in challenges anonymously
+- Prove fitness achievements selectively
+- Control who can see their progress
+
+**Challenge Organizers:**
+- Verify competition results fairly
+- Distribute prizes automatically
+- Ensure no data leakage of participants
+- Create transparent yet private contests
 
 ---
 
@@ -53,6 +158,35 @@ Built for the **Zama FHE Challenge** - demonstrating practical privacy-preservin
 ## 🏗️ Architecture
 
 ```
+┌─────────────────────────────────────────────────────────────┐
+│  Frontend Layer (React + TypeScript)                        │
+├─────────────────────────────────────────────────────────────┤
+│  React 18 + Vite + @fhevm/sdk                              │
+│  ├─ WalletConnect (MetaMask integration)                   │
+│  ├─ MemberRegistration (membership tiers)                  │
+│  ├─ WorkoutTracker (encrypted workout logging)             │
+│  ├─ ChallengeManager (competition management)              │
+│  └─ ContractStats (real-time statistics)                   │
+└─────────────────────────────────────────────────────────────┘
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  Smart Contract Layer (Solidity + FHE)                      │
+├─────────────────────────────────────────────────────────────┤
+│  PrivateFitnessTracker.sol                                  │
+│  ├─ Member Management (encrypted registration)             │
+│  ├─ Workout Recording (FHE encryption)                      │
+│  ├─ Challenge System (privacy-preserving competitions)     │
+│  └─ Access Control (owner, members, pausers)               │
+└─────────────────────────────────────────────────────────────┘
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│  FHE Encryption Layer (Zama fhEVM)                          │
+├─────────────────────────────────────────────────────────────┤
+│  Encrypted Types: euint8, euint16, euint32, euint64, ebool │
+│  Operations: FHE.add, FHE.ge, FHE.lt, FHE.select          │
+│  Decryption: EIP-712 signatures for user access           │
+└─────────────────────────────────────────────────────────────┘
+                            ▼
 ┌─────────────────────────────────────────────────────────────┐
 │  Development Layer                                           │
 ├─────────────────────────────────────────────────────────────┤
@@ -98,11 +232,21 @@ Built for the **Zama FHE Challenge** - demonstrating practical privacy-preservin
 - Solidity 0.8.24
 - Zama fhEVM (Fully Homomorphic Encryption)
 - OpenZeppelin patterns
+- @fhevm/sdk integration
+
+**Frontend (New React App):**
+- React 18.2.0 with TypeScript 5.0
+- Vite 5.0 (fast build tool)
+- @fhevm/sdk/react (React hooks for FHE)
+- ethers.js v6.14.0
+- Modern component architecture
+- MetaMask wallet integration
 
 **Development Framework:**
 - Hardhat 2.22.0 with custom tasks
 - Ethers.js v6.14.0
 - Hardhat Toolbox (Mocha, Chai, Coverage)
+- TypeScript for type safety
 
 **Security & Testing:**
 - 100+ test cases (95%+ coverage)
@@ -116,12 +260,14 @@ Built for the **Zama FHE Challenge** - demonstrating practical privacy-preservin
 - Automated deployment scripts
 - Etherscan verification
 - GitHub Actions CI/CD
+- Vercel (frontend hosting)
 
 **Performance:**
 - Gas optimization (800 compiler runs)
 - Via-IR compilation
 - Gas reporter with USD tracking
 - DoS protection (gas/size limits)
+- Vite HMR for instant frontend updates
 
 ---
 
@@ -138,8 +284,8 @@ Built for the **Zama FHE Challenge** - demonstrating practical privacy-preservin
 
 **1. Clone the repository:**
 ```bash
-git clone <repository-url>
-cd privacy-fitness-tracker
+git clone https://github.com/SidLebsack/FHEFitnessTracker
+cd FHEFitnessTracker
 ```
 
 **2. Install dependencies:**
@@ -170,6 +316,8 @@ REPORT_GAS=true
 
 ### 🔧 Development Workflow
 
+#### Smart Contracts
+
 **Compile contracts:**
 ```bash
 npm run compile
@@ -199,6 +347,41 @@ npm run deploy:local
 ```bash
 npm run simulate
 ```
+
+#### React Frontend (New!)
+
+**Navigate to frontend directory:**
+```bash
+cd privacy-fitness-tracker/frontend
+```
+
+**Install frontend dependencies:**
+```bash
+npm install
+```
+
+**Start development server (runs on http://localhost:3001):**
+```bash
+npm run dev
+```
+
+**Build for production:**
+```bash
+npm run build
+```
+
+**Preview production build:**
+```bash
+npm run preview
+```
+
+**Frontend Features:**
+- ✅ MetaMask wallet connection
+- ✅ Member registration with different tiers
+- ✅ Workout tracking with encrypted data
+- ✅ Challenge creation and joining
+- ✅ Contract statistics viewing
+- ✅ Full @fhevm/sdk integration
 
 ---
 
@@ -237,7 +420,7 @@ npm run interact
 The contract uses Zama's fhEVM library for encrypted computations:
 
 ```solidity
-import "@fhevm/solidity/contracts/FHE.sol";
+import "fhevm/lib/TFHE.sol";
 
 // Encrypted data types
 euint32 private encryptedCalories;
@@ -246,16 +429,22 @@ euint8 private encryptedIntensity;
 
 // Homomorphic operations
 function recordWorkout(uint32 _caloriesBurned, uint16 _durationMinutes, uint8 _intensityLevel) public {
-    // Encrypt data on-chain
-    euint32 calories = FHE.asEuint32(_caloriesBurned);
-    euint16 duration = FHE.asEuint16(_durationMinutes);
-    euint8 intensity = FHE.asEuint8(_intensityLevel);
+    require(members[msg.sender].isActive, "Not an active member");
 
-    // Store encrypted
-    workoutData[msg.sender].totalCalories = FHE.add(
+    // Encrypt data on-chain
+    euint32 calories = TFHE.asEuint32(_caloriesBurned);
+    euint16 duration = TFHE.asEuint16(_durationMinutes);
+    euint8 intensity = TFHE.asEuint8(_intensityLevel);
+
+    // Store encrypted values
+    workoutData[msg.sender].totalCalories = TFHE.add(
         workoutData[msg.sender].totalCalories,
         calories
     );
+
+    workoutData[msg.sender].workoutCount++;
+
+    emit WorkoutRecorded(msg.sender, block.timestamp);
 }
 ```
 
@@ -290,6 +479,23 @@ function getChallengeInfo(uint256 _challengeId) view returns (...)
 privacy-fitness-tracker/
 ├── contracts/
 │   └── PrivateFitnessTracker.sol        # Main smart contract with FHE
+├── frontend/                             # NEW React Frontend
+│   ├── src/
+│   │   ├── components/                   # React components
+│   │   │   ├── WalletConnect.tsx         # MetaMask connection
+│   │   │   ├── MemberRegistration.tsx    # Member registration UI
+│   │   │   ├── WorkoutTracker.tsx        # Workout logging UI
+│   │   │   ├── ChallengeManager.tsx      # Challenge management UI
+│   │   │   └── ContractStats.tsx         # Statistics display
+│   │   ├── App.tsx                       # Main application
+│   │   ├── main.tsx                      # Entry point
+│   │   └── index.css                     # Global styles
+│   ├── public/
+│   │   └── index.html                    # HTML template
+│   ├── package.json                      # Frontend dependencies
+│   ├── vite.config.ts                    # Vite configuration
+│   ├── tsconfig.json                     # TypeScript config
+│   └── README.md                         # Frontend documentation
 ├── scripts/
 │   ├── deploy.js                         # Automated deployment script
 │   ├── verify.js                         # Etherscan verification
@@ -377,7 +583,7 @@ The Zama fhEVM implementation ensures:
 
 ### Decryption Permissions
 
-- **Members**: Can decrypt their own workout totals (future feature)
+- **Members**: Can decrypt their own workout totals (future feature with EIP-712 signatures)
 - **Contract Owner**: Administrative access for emergency operations
 - **Challenge Winners**: Can prove victory without revealing exact metrics
 
@@ -449,7 +655,7 @@ See [TESTING.md](./TESTING.md) for detailed testing documentation.
 - ✅ **Solidity Optimizer**: 800 runs (4x improvement)
 - ✅ **Via-IR Compilation**: Advanced optimization enabled
 - ✅ **Gas Reporter**: Automatic cost tracking with USD conversion
-- ✅ **DoS Protection**: Gas limits (30M), contract size limits (24KB), complexity limits (8)
+- ✅ **DoS Protection**: Gas limits, contract size limits, complexity limits
 - ✅ **Pre-commit Hooks**: Catch issues before commit (Husky)
 
 See [SECURITY_PERFORMANCE.md](./SECURITY_PERFORMANCE.md) for detailed optimization guide.
@@ -523,11 +729,15 @@ See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution guidelines.
 
 ## 📹 Demo
 
-**🎬 Video Demo:** Watch the platform in action - [PrivateFitnessTracker.mp4](./PrivateFitnessTracker.mp4)
+**🎬 Video Demo:** Download and watch the platform in action - [demo.mp4](./demo.mp4)
 
-**🌐 Live Demo:** Coming soon - Deployed on Sepolia testnet
+> **Note:** The demo.mp4 video file must be downloaded to view. It cannot be played directly in the browser.
+
+**🌐 Live Demo:** Experience the platform live - [https://fhe-fitness-tracker.vercel.app/](https://fhe-fitness-tracker.vercel.app/)
 
 **📍 Contract Address:** [`0x6Bbf52494089ce94859414D82d03f7c8a4cF1844`](https://sepolia.etherscan.io/address/0x6Bbf52494089ce94859414D82d03f7c8a4cF1844)
+
+**🔗 GitHub Repository:** [https://github.com/SidLebsack/FHEFitnessTracker](https://github.com/SidLebsack/FHEFitnessTracker)
 
 ---
 
@@ -548,7 +758,7 @@ This project demonstrates practical privacy-preserving applications using:
 
 ---
 
-## 💡 Why Privacy Matters
+## 💡 Why Privacy Matters in Fitness Data
 
 > *"In a world where health data is increasingly valuable, we believe individuals should have complete control over their fitness information. This platform proves that you can have both transparency and privacy - tracking progress, competing fairly, and winning rewards without ever exposing sensitive personal health metrics."*
 
@@ -558,4 +768,4 @@ This project demonstrates practical privacy-preserving applications using:
 
 ---
 
-**🔗 Quick Links:** [Documentation](./DEPLOYMENT.md) • [Testing](./TESTING.md) • [Security](./SECURITY_PERFORMANCE.md) • [CI/CD](./CI_CD.md) • [Contributing](./CONTRIBUTING.md)
+**🔗 Quick Links:** [Documentation](./DEPLOYMENT.md) • [Testing](./TESTING.md) • [Security](./SECURITY_PERFORMANCE.md) • [CI/CD](./CI_CD.md) • [Contributing](./CONTRIBUTING.md) • [Live Demo](https://fhe-fitness-tracker.vercel.app/) • [GitHub](https://github.com/SidLebsack/FHEFitnessTracker)
